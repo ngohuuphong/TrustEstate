@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Styles from '../../styles';
+import Styles from "../../../../styles";
 
-class MemoryHome extends Component {
+class SearchHome extends Component {
 
     static navigationOptions = ({ navigation }) => ({
-        title: "Memory",
+        title: "Search",
         headerLeft: (
             <TouchableOpacity
                 style={Styles.headerButton}
@@ -28,4 +28,4 @@ class MemoryHome extends Component {
     }
 }
 
-export default MemoryHome;
+export default SearchHome;

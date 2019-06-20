@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome5';
-import Styles from '../styles';
+import Styles from '../../../styles';
 
-class ProfileHome extends Component {
+class LoginScreen extends Component {
 
     static navigationOptions = ({ navigation }) => ({
         title: "Profile",
@@ -26,4 +26,4 @@ class ProfileHome extends Component {
     }
 }
 
-export default ProfileHome;
+export default LoginScreen;
