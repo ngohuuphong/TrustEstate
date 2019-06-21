@@ -193,7 +193,7 @@ class LoginScreen extends Component {
                     Don't have an account?{" "}
                   </Text>
                   <TouchableOpacity
-                    onPress={() => Linking.openURL("http://google.com")}
+                   onPress={() => this.props.navigation.navigate('Register')}
                   >
                     <Text
                       style={{
