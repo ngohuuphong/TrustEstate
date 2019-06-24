@@ -11,10 +11,20 @@ import {
   Dimensions,
   Platform,
   TouchableOpacity,
-  Button
+  SafeAreaView
 } from "react-native";
+import {
+  Container,
+  Header,
+  Content,
+  Item,
+  Input,
+  Button,
+  CheckBox
+} from "native-base";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import Octicons from "react-native-vector-icons/Octicons";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 import Styles from "../../../../styles";
 import * as theme from "./../../../../theme";
@@ -145,8 +155,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.sizes.padding,
     paddingVertical: theme.sizes.padding / 2,
     bottom: 20,
-    left:
-      (width - theme.sizes.padding * 4) / (Platform.OS === "ios" ? 3.2 : 3.6),
+    left: (width - theme.sizes.padding * 4) / (Platform.OS === "ios" ? 3.2 : 8),
     backgroundColor: theme.colors.white,
     width: width - theme.sizes.padding * 4
   },
@@ -578,18 +587,50 @@ class HomePage extends Component {
       </View>
     );
   };
+
+  renderSearchBar = () => {
+    return (
+      <View style={[styles.flex, styles.column, styles.recommended]}>
+        <View
+          style={{
+            marginHorizontal: theme.sizes.margin,
+            marginTop: theme.sizes.margin
+          }}
+        >
+          <Item rounded style={{ borderRadius: theme.sizes.radius, borderColor:"#EFEFEF", height: width * 0.1, backgroundColor: "#F8F8F8", }}>
+            <Input style={{ fontSize: 14 }} placeholder="enter keyword" />
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate("Login")}
+            >
+              <Ionicons
+                style={{ color: "#B0AEAF", fontSize: 23, marginRight: 10 }}
+                active
+                name="ios-search"
+              />
+            </TouchableOpacity>
+          </Item>
+        </View>
+      </View>
+    );
+  };
+
   render() {
     return (
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{
-          paddingBottom: theme.sizes.padding
-        }}
+      <SafeAreaView
+        style={{ flex: 1, flexDirection: "column", backgroundColor: "#fff" }}
       >
-        {this.renderBuildingTypes()}
-        {this.renderCities()}
-        {this.renderHousesRecommended()}
-      </ScrollView>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          contentContainerStyle={{
+            paddingBottom: theme.sizes.padding
+          }}
+        >
+          {this.renderSearchBar()}
+          {this.renderBuildingTypes()}
+          {this.renderCities()}
+          {this.renderHousesRecommended()}
+        </ScrollView>
+      </SafeAreaView>
     );
   }
 }
