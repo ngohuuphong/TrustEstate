@@ -28,7 +28,6 @@ import Entypo from "react-native-vector-icons/Entypo";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
 import Styles from "../../../../styles";
 import * as theme from "./../../../../theme";
-
 const { width, height } = Dimensions.get("window");
 const mocks = [
   {
@@ -330,7 +329,7 @@ class SearchHome extends Component {
       >
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => navigation.navigate("Article", { article: item })}
+          onPress={() => navigation.navigate("PropertyDetail", { article: item })}
         >
           <View style={[styles.flex]}>
             <Image
@@ -371,7 +370,7 @@ class SearchHome extends Component {
                   />
                   <Text
                     style={{
-                      color: "#5D5D5D",
+                      color: "#3A3A3A",
                       fontSize: theme.sizes.font,
                       fontWeight: "400",
                       paddingBottom: theme.sizes.padding / 5
@@ -386,7 +385,7 @@ class SearchHome extends Component {
                   />
                   <Text
                     style={{
-                      color: "#5D5D5D",
+                      color: "#3A3A3A",
                       fontSize: theme.sizes.font,
                       fontWeight: "400",
                       paddingBottom: theme.sizes.padding / 5
@@ -485,7 +484,7 @@ const styles = StyleSheet.create({
   },
   recommendationImage2: {
     width: width - theme.sizes.padding * 2,
-    height: (width - theme.sizes.padding * 2) / 2.5,
+    height: (width - theme.sizes.padding * 2) / 2.3,
     borderRadius: theme.sizes.radius
   }
 });
