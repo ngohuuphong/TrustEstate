@@ -35,7 +35,7 @@ const { width, height } = Dimensions.get("window");
 
 class SearchHome extends Component {
   static navigationOptions = ({ navigation }) => ({
-    title: "Search",
+    title: "Detail",
     headerLeft: (
       <TouchableOpacity
         style={Styles.headerButton}

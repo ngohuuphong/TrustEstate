@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Modal,
   Animated,
   Text,
   StyleSheet,
@@ -11,6 +12,7 @@ import {
   Dimensions,
   Platform,
   TouchableOpacity,
+  TouchableHighlight,
   SafeAreaView
 } from "react-native";
 import {
@@ -26,6 +28,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Entypo from "react-native-vector-icons/Entypo";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Styles from "../../../../styles";
 import * as theme from "./../../../../theme";
 const { width, height } = Dimensions.get("window");
@@ -117,6 +120,13 @@ const mocks = [
 ];
 
 class SearchHome extends Component {
+  state = {
+    modalVisible: false,
+    active: "Sort By"
+  };
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
   static navigationOptions = ({ navigation }) => ({
     title: "Search",
     headerLeft: (
@@ -186,14 +196,18 @@ class SearchHome extends Component {
             style={{
               borderRadius: theme.sizes.radius,
               borderColor: "#7777B2",
-              height: width * 0.07,backgroundColor: "#7777B2"
+              height: width * 0.07,
+              backgroundColor: "#7777B2"
             }}
           >
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Login")}
             >
               <Text
-                style={{ color: "white", paddingHorizontal: theme.sizes.padding/1.5 }}
+                style={{
+                  color: "white",
+                  paddingHorizontal: theme.sizes.padding / 1.5
+                }}
               >
                 Tokyo
               </Text>
@@ -204,14 +218,18 @@ class SearchHome extends Component {
             style={{
               borderRadius: theme.sizes.radius,
               borderColor: "#47B97E",
-              height: width * 0.07,backgroundColor: "#47B97E"
+              height: width * 0.07,
+              backgroundColor: "#47B97E"
             }}
           >
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Login")}
             >
               <Text
-                style={{ color: "white", paddingHorizontal: theme.sizes.padding/1.5 }}
+                style={{
+                  color: "white",
+                  paddingHorizontal: theme.sizes.padding / 1.5
+                }}
               >
                 Kobe
               </Text>
@@ -222,14 +240,18 @@ class SearchHome extends Component {
             style={{
               borderRadius: theme.sizes.radius,
               borderColor: "#6191D5",
-              height: width * 0.07,backgroundColor: "#6191D5"
+              height: width * 0.07,
+              backgroundColor: "#6191D5"
             }}
           >
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Login")}
             >
               <Text
-                style={{ color: "white", paddingHorizontal: theme.sizes.padding/1.5 }}
+                style={{
+                  color: "white",
+                  paddingHorizontal: theme.sizes.padding / 1.5
+                }}
               >
                 Osaka
               </Text>
@@ -240,14 +262,18 @@ class SearchHome extends Component {
             style={{
               borderRadius: theme.sizes.radius,
               borderColor: "#FF8C64",
-              height: width * 0.07,backgroundColor: "#FF8C64"
+              height: width * 0.07,
+              backgroundColor: "#FF8C64"
             }}
           >
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Login")}
             >
               <Text
-                style={{ color: "white", paddingHorizontal: theme.sizes.padding/1.5 }}
+                style={{
+                  color: "white",
+                  paddingHorizontal: theme.sizes.padding / 1.5
+                }}
               >
                 Hirosima
               </Text>
@@ -258,14 +284,18 @@ class SearchHome extends Component {
             style={{
               borderRadius: theme.sizes.radius,
               borderColor: "#8CEEEE",
-              height: width * 0.07,backgroundColor: "#8CEEEE"
+              height: width * 0.07,
+              backgroundColor: "#8CEEEE"
             }}
           >
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate("Login")}
             >
               <Text
-                style={{ color: "white", paddingHorizontal: theme.sizes.padding/1.5 }}
+                style={{
+                  color: "white",
+                  paddingHorizontal: theme.sizes.padding / 1.5
+                }}
               >
                 Kanto
               </Text>
@@ -288,16 +318,20 @@ class SearchHome extends Component {
           >
             32 Results Found
           </Text>
-          <TouchableOpacity activeOpacity={0.5}>
+          <TouchableHighlight
+            onPress={() => {
+              this.setModalVisible(true);
+            }}
+          >
             <View style={{ flexDirection: "row" }}>
-              <Text style={{ color: "#373737" }}>Sort </Text>
-              <Icon
+              <Text style={{ color: "#ADAAAB" }}>Filter </Text>
+              <MaterialCommunityIcons
                 style={{ color: "#ADAAAB", fontWeight: "400" }}
-                name="sort"
+                name="filter"
                 size={20}
               />
             </View>
-          </TouchableOpacity>
+          </TouchableHighlight>
         </View>
         <View style={[styles.column]}>
           <FlatList
@@ -329,7 +363,9 @@ class SearchHome extends Component {
       >
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => navigation.navigate("PropertyDetail", { article: item })}
+          onPress={() =>
+            navigation.navigate("PropertyDetail", { article: item })
+          }
         >
           <View style={[styles.flex]}>
             <Image
@@ -427,6 +463,175 @@ class SearchHome extends Component {
       </View>
     );
   };
+  renderModalFilter = () => {
+    const tabs = ["Sort By", "Advance", "Condition"];
+    const { active } = this.state;
+    let renderTabView = this.renderSortTab();
+    if(active == "Sort by"){
+        renderTabView = this.renderSortTab();
+    } else if(active == "Advance"){
+        renderTabView = this.renderAdvanceTab();
+    }else if (active == "Condition"){
+        renderTabView = this.renderConditionTab();
+    }
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={this.state.modalVisible}
+        onRequestClose={() => {
+          alert("Modal has been closed.");
+        }}
+      >
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "column",
+            justifyContent: "flex-end"
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              backgroundColor: "black",
+              opacity: 0.5,
+              zIndex: 1,
+              position: "absolute",
+              width,
+              height
+            }}
+          />
+          <View
+            style={{
+              width,
+              height: width,
+              backgroundColor: "white",
+              opacity: 1,
+              zIndex: 2,
+              borderTopRightRadius: theme.sizes.radius + 2,
+              borderTopLeftRadius: theme.sizes.radius + 2,
+              flexDirection: "column",
+              justifyContent: "flex-start",
+              padding: theme.sizes.padding
+            }}
+          >
+            <View
+              style={{
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                alignContent: "center"
+              }}
+            >
+              <Text
+                style={{
+                  color: "#DC2F33",
+                  alignSelf: "center",
+                  fontSize: theme.sizes.font * 1.2
+                }}
+              >
+                Filter
+              </Text>
+              <View
+                style={{
+                  width: 40,
+                  height: 30,
+                  backgroundColor: "#DC2F33",
+                  borderRadius: 5,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  alignSelf: "flex-end",
+                  marginLeft: 10
+                }}
+              >
+                <TouchableHighlight
+                  onPress={() => {
+                    this.setModalVisible(!this.state.modalVisible);
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    style={{
+                      color: "white",
+                      fontWeight: "400",
+                      alignSelf: "center"
+                    }}
+                    name="filter"
+                    size={20}
+                  />
+                </TouchableHighlight>
+              </View>
+            </View>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={{
+                paddingBottom: theme.sizes.padding
+              }}
+            >
+              <View style={[styles.column, styles.flex]}>
+                <View style={[styles.row, styles.flex, styles.tabs]}>
+                  {tabs.map(tab => this.renderTab(tab))}
+                </View>
+                {renderTabView}
+              </View>
+            </ScrollView>
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+  renderTab(tab) {
+    const { active } = this.state;
+    const isActive = active === tab;
+
+    return (
+      <TouchableOpacity
+        key={`tab-${tab}`}
+        onPress={() => this.handleTab(tab)}
+        style={[styles.tab, isActive ? styles.active : null]}
+      >
+        <Text
+          size={16}
+          medium
+          gray={!isActive}
+          secondary={isActive}
+          style={[
+            isActive ? styles.activeTitle : null,
+            { fontSize: theme.sizes.font * 1.1 }
+          ]}
+        >
+          {tab}
+        </Text>
+      </TouchableOpacity>
+    );
+  }
+  handleTab = tab => {
+    this.setState({ active: tab });
+  };
+  renderSortTab = () => {
+    return (
+      <View
+        style={[
+          styles.row,
+          { flex: 1, backgroundColor: "blue", width: width, height: width }
+        ]}
+      >
+        <Text>Sort By Tab</Text>
+      </View>
+    );
+  };
+  renderAdvanceTab = () => {
+    return (
+      <View style={[styles.row, styles.flex]}>
+        <Text>Advance Tab</Text>
+      </View>
+    );
+  };
+  renderConditionTab = () => {
+    return (
+      <View style={[styles.row, styles.flex]}>
+        <Text>Condition Tab</Text>
+      </View>
+    );
+  };
   render() {
     return (
       <SafeAreaView
@@ -442,6 +647,7 @@ class SearchHome extends Component {
           {this.rendertags()}
           {this.renderResults()}
         </ScrollView>
+        {this.renderModalFilter()}
       </SafeAreaView>
     );
   }
@@ -486,6 +692,23 @@ const styles = StyleSheet.create({
     width: width - theme.sizes.padding * 2,
     height: (width - theme.sizes.padding * 2) / 2.3,
     borderRadius: theme.sizes.radius
+  },
+  tabs: {
+    borderBottomColor: "#D7D7D7",
+    borderBottomWidth: 1,
+    margin: theme.sizes.margin
+  },
+  tab: {
+    paddingRight: theme.sizes.padding * 2,
+    paddingBottom: theme.sizes.padding / 1.5
+  },
+  active: {
+    borderBottomColor: "#DC2F33",
+    borderBottomWidth: 3
+  },
+  activeTitle: {
+    color: "#3A3A3A",
+    fontWeight: "bold"
   }
 });
 
